@@ -37,8 +37,9 @@
 -- semantics. Evidently, we assume our language is referential transparent language.
 --
 -- >myTerm :: Fix Val
--- >myTerm = In $ (Prim "2" `add` Prim "5") `mul` (Prim "2" `add` Prim "5")
--- >  where add a b = Prim "+" `app` a `app` b
+-- >myTerm = In $ clc `mul` clc
+-- >  where clc = Prim "2" `add` Prim "5"
+-- >        add a b = Prim "+" `app` a `app` b
 -- >        mul a b = Prim "*" `app` a `app` b
 -- >        app a b = App (In a) (In b)
 --
@@ -67,7 +68,6 @@ module Data.Reify.Graph.CSE (cse) where
 import Data.Map (Map, toList, fromListWith, filter, update, mapKeysWith)
 import Data.Reify
 import Prelude hiding (filter)
-import qualified Data.Map as Map
 
 {- | Perform CSE on the input graph. -} 
 
